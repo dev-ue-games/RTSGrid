@@ -11,20 +11,20 @@ class USceneComponent;
 class UHierarchicalInstancedStaticMeshComponent;
 
 
-UCLASS(HideCategories = (Physics, LOD, Replication,Cooking, Activation), CollapseCategories = (Actor, Input, AssetUserData, Collision, Rendering, Tags), AutoExpandCategories = (Grids), ClassGroup = "GridSystem")
+UCLASS(HideCategories = (Physics, LOD, Replication, Cooking, Activation), CollapseCategories = (Actor, Input, AssetUserData, Collision, Rendering, Tags), AutoExpandCategories = (Grids), ClassGroup = "GridSystem")
 
 class RTSGRIDS_API AGridSystem : public AActor
 
 {
 	GENERATED_BODY()
-	
+
 		UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Grids", meta = (AllowPrivateAccess = "true"))
 		USceneComponent* RootComp;
 
-		UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Grids", meta = (AllowPrivateAccess = "true"))
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Grids", meta = (AllowPrivateAccess = "true"))
 		UHierarchicalInstancedStaticMeshComponent* PreviewGridHISM;
 
-public:	
+public:
 	// Sets default values for this actor's properties
 	AGridSystem();
 
@@ -37,7 +37,7 @@ public:
 		float CellSize;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Grids")
-		TArray<FGridCoord> BlockedTiles; // TODO investigate why TSet gets angry
+		TArray<FGridCoord> BlockedTiles; 
 
 		// TSet would be more efficient but TArray is faster for us to make now
 	UPROPERTY(BlueprintReadOnly, Category = "Grids")
@@ -62,7 +62,7 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
