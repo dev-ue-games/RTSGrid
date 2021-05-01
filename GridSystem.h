@@ -4,8 +4,8 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
-#include "GridSystem.generated.h"
 #include "GridCoords.h"
+#include "GridSystem.generated.h"
 
 class USceneComponent;
 class UHierarchicalInstancedStaticMeshComponent;
