@@ -1,3 +1,4 @@
+
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #pragma once
@@ -52,7 +53,9 @@ public:
 	*/
 	FORCEINLINE FGridCoord(FVector2D InCoord);
 
-	FORCEINLINE bool operator==(FGridCoord& V) const;
+	FORCEINLINE bool operator==(const FGridCoord& V) const;
+
+	FORCEINLINE bool operator!=(const FGridCoord& V) const;
 
 	FORCEINLINE FGridCoord operator*(float Scale) const;
 
@@ -60,6 +63,13 @@ public:
 
 	FORCEINLINE FGridCoord operator*(FGridCoord& V) const;
 
+	FORCEINLINE bool operator<(const FGridCoord& V) const;
+
+	FORCEINLINE bool operator>(const FGridCoord& V) const;
+
+	FORCEINLINE bool operator<=(const FGridCoord& V) const;
+
+	FORCEINLINE bool operator>=(const FGridCoord& V) const;
 };
 
 FORCEINLINE FGridCoord::FGridCoord()
@@ -77,10 +87,18 @@ FORCEINLINE FGridCoord::FGridCoord(int InCol, int InRow)
 FORCEINLINE FGridCoord::FGridCoord(FVector2D InCoord)
 	: Col(InCoord.Y), Row(InCoord.X)
 {}
-FORCEINLINE bool FGridCoord::operator==(FGridCoord& V) const
+FORCEINLINE bool FGridCoord::operator==(const FGridCoord& V) const
 {
 	return Col == V.Col && Row == V.Row;
 }
+
+FORCEINLINE bool FGridCoord::operator!=(const FGridCoord& V) const
+{
+	return Col != V.Col || Row != V.Row;
+}
+
+
+
 FORCEINLINE FGridCoord FGridCoord::operator*(float Scale) const
 {
 	return FGridCoord(Col * Scale, Row * Scale);
@@ -95,6 +113,30 @@ FORCEINLINE FGridCoord FGridCoord::operator*(FGridCoord& V) const
 {
 	return FGridCoord(Col * V.Col, Row * V.Row);
 }
+FORCEINLINE bool FGridCoord::operator<(const  FGridCoord& V) const
+{
+	return Col < V.Col, Row < V.Row;
+}
+FORCEINLINE bool FGridCoord::operator<=(const  FGridCoord& V) const
+{
+	return Col <= V.Col, Row <= V.Row;
+}
+FORCEINLINE bool FGridCoord::operator>(const  FGridCoord& V) const
+{
+	return Col > V.Col, Row > V.Row;
+}
+FORCEINLINE bool FGridCoord::operator>=(const  FGridCoord& V) const
+{
+	return Col >= V.Col, Row >= V.Row;
+}
+
+
+
+
+
+
+
+
 
 FORCEINLINE uint32 GetTypeHash(const FGridCoord& V)
 {
@@ -102,6 +144,18 @@ FORCEINLINE uint32 GetTypeHash(const FGridCoord& V)
 }
 
 
+
+
+/*
+FORCEINLINE FVector2D FGridCoord::ToVector2D() const
+{
+	FVector2D V;
+	V.X = Row;
+	V.Y = Col;
+	return V;
+
+}
+*/
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 UCLASS()
@@ -126,4 +180,3 @@ public:
 
 
 };
-
