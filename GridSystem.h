@@ -9,9 +9,10 @@
 
 class USceneComponent;
 class UHierarchicalInstancedStaticMeshComponent;
+class UTextRenderComponent;
 
-
-UCLASS(HideCategories = (Physics, LOD, Replication, Cooking, Activation), CollapseCategories = (Actor, Input, AssetUserData, Collision, Rendering, Tags), AutoExpandCategories = (Grids), ClassGroup = "GridSystem")
+//
+UCLASS(HideCategories = (Physics, LOD, Replication,Cooking, Activation), CollapseCategories = (Actor, Input, AssetUserData, Collision, Rendering, Tags), AutoExpandCategories = (Grids), ClassGroup = "GridSystem")
 
 class RTSGRIDS_API AGridSystem : public AActor
 
@@ -37,9 +38,9 @@ public:
 		float CellSize;
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Grids")
-		TArray<FGridCoord> BlockedTiles; 
+		TArray<FGridCoord> BlockedTiles;
 
-		// TSet would be more efficient but TArray is faster for us to make now
+	// TSet would be more efficient but TArray is faster for us to make now
 	UPROPERTY(BlueprintReadOnly, Category = "Grids")
 		TArray<FGridCoord> GeneratedGrid;
 
@@ -58,6 +59,45 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Grids")
 		TArray<FGridCoord> GenerateGrid();
 
+	UFUNCTION(BlueprintPure, Category = "Grids")
+		FVector GetGridOriginRelative();
+
+	UFUNCTION(BlueprintPure, Category = "Grids")
+		FVector GetGridOriginWorld();
+
+	UFUNCTION(BlueprintPure, Category = "Grids")
+		FVector2D GetGridSize();
+
+	UFUNCTION(BlueprintPure, Category = "Grids")
+		FVector2D GetGridExtents();
+
+	UFUNCTION(BlueprintPure, Category = "Grids")
+		FVector GetGridRelativeFromWorld(FVector WorldLocation);
+
+	UFUNCTION(BlueprintPure, Category = "Grids")
+		FVector GetCellCenterFromRelative(FVector RelativeLocation, bool bReturnWorldSpace);
+
+	UFUNCTION(BlueprintPure, Category = "Grids")
+		bool IsInGridBounds(FGridCoord Coordinate);
+
+	UFUNCTION(BlueprintPure, Category = "Grids")
+		bool IsClearTile(FGridCoord Coordinate);
+
+	UFUNCTION(BlueprintPure, Category = "Grids")
+		bool IsValidLocation(FGridCoord Cordinate);
+
+	UFUNCTION(BlueprintPure, Category = "Grids")
+		FGridCoord GetCoordinateFromRelative(FVector RelativeLocation, int& CellID);
+
+	UFUNCTION(BlueprintPure, Category = "Grids")
+		FGridCoord GetCoordinateFromCellID (int ID);
+
+	UFUNCTION(BlueprintPure, Category = "Grids")
+	int GetCellIDFromCoordinate(FGridCoord Coordinate);
+
+
+
+
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
@@ -65,5 +105,9 @@ protected:
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
+
+	void GenerateVisualGrid();
+
+	TArray<UTextRenderComponent*> TextComponents;
 
 };
